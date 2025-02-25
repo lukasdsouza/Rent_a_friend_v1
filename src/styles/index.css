@@ -1,0 +1,60 @@
+/* index.css */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+Seus estilos personalizados aqui
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #F3F4F6; /* Exemplo de cor de fundo */
+}
+
+
+/* Estilos para o menu de navegação */
+.navbar {
+  background-color: #4F46E5; /* Cor de fundo do menu */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar a {
+  color: #fff; /* Cor dos links do menu */
+  padding: 10px 15px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar a:hover {
+  background-color: #3730A3; /* Cor de fundo dos links ao passar o mouse */
+  border-radius: 0.5rem;
+}
+
+/* Estilos para o menu de navegação responsivo */
+.navbar .menu {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar .menu-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .navbar .menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+  }
+
+  .navbar .menu-toggle {
+      display: block;
+      cursor: pointer;
+  }
+
+  .navbar .menu.active {
+      display: flex;
+  }
+}

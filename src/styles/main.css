@@ -1,0 +1,161 @@
+/* Importação da fonte Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #F3F4F6; /* Cor de fundo */
+    color: #333; /* Cor do texto */
+}
+
+#root {
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Estilos para botões */
+button {
+    background-color: #4F46E5; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0.5rem; /* Bordas arredondadas */
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #3730A3; /* Cor de fundo do botão ao passar o mouse */
+}
+
+/* Estilos para cabeçalhos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    color: #4F46E5; /* Cor dos cabeçalhos */
+}
+
+/* Estilos para links */
+a {
+    color: #10B981; /* Cor dos links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para formulários */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+input:focus, textarea:focus {
+    border-color: #4F46E5;
+    outline: none;
+}
+
+/* Estilos para containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estilos para cartões */
+.card {
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Estilos para o menu de navegação */
+.navbar {
+    background-color: #4F46E5; /* Cor de fundo do menu */
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: #fff; /* Cor dos links do menu */
+    padding: 10px 15px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    background-color: #3730A3; /* Cor de fundo dos links ao passar o mouse */
+    border-radius: 0.5rem;
+}
+
+/* Estilos para o menu de navegação responsivo */
+.navbar .menu {
+    display: flex;
+    gap: 15px;
+}
+
+.navbar .menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .navbar .menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navbar .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+
+    .navbar .menu.active {
+        display: flex;
+    }
+}
+
+/* Estilos para o conteúdo principal */
+.main-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+/* Estilos para a seção de registro */
+.register-section {
+    background-color: #E5E7EB;
+    padding: 20px;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;
+}
+
+.register-section h2 {
+    color: #4F46E5;
+    margin-bottom: 10px;
+}
+
+.register-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-section input {
+    margin-bottom: 10px;
+}
+
+.register-section button {
+    align-self: flex-start;
+}

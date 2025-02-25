@@ -68,12 +68,12 @@ rent_a_friend/
 
 3. Configure as variáveis de ambiente no arquivo `.env`:
    ```properties
-   VITE_API_KEY=your_api_key
-   VITE_AUTH_DOMAIN=your_auth_domain
-   VITE_PROJECT_ID=your_project_id
-   VITE_STORAGE_BUCKET=your_storage_bucket
-   VITE_MESSAGING_SENDER_ID=your_messaging_sender_id
-   VITE_APP_ID=your_app_id
+   VITE_API_KEY=AIzaSyAvupoVf90NYV2h8GWng7W8ZAS6GMMync8
+   VITE_PROJECT_ID=rent-a-friend-b4d44
+   VITE_APP_ID=1:439840064142:web:c7fb57d18ae8b1e0e07fdf
+   VITE_AUTH_DOMAIN=oender-6df25.firebaseapp.com
+   VITE_STORAGE_BUCKET=oender-6df25.appspot.com
+   VITE_MESSAGING_SENDER_ID=926010024849
    ```
 
 4. Inicie o servidor de desenvolvimento:

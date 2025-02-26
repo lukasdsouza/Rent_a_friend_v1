@@ -1,47 +1,65 @@
 // src/components/Navbar.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const userImage = localStorage.getItem('userImage') || 'https://via.placeholder.com/40';
+  const userName = localStorage.getItem('userName') || 'Usuário';
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar">
-      <div className="container">
-        <div className="flex justify-between items-center">
-          {/* Logo / Título */}
-          <Link to="/" className="text-xl font-bold text-white">
-            SocialAtividades
+      <div className="navbar-container">
+        <Link to="/dashboard" className="logo">
+          Rent a Friend
+        </Link>
+
+        <div className="nav-links">
+          <Link to="/dashboard" className="nav-link">
+            Dashboard
           </Link>
-          {/* Botão para menu mobile */}
-          <div className="menu-toggle md:hidden" onClick={toggleMenu}>
-            <svg className="h-6 w-6 text-white" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              {isOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+          <Link to="/nearby" className="nav-link">
+            Nas Redondezas
+          </Link>
+          <Link to="/create-activity" className="nav-link">
+            Criar Atividade
+          </Link>
+        </div>
+
+        <div className="nav-profile">
+          <div className="profile-menu" onClick={() => navigate('/profile')}>
+            <img
+              src={userImage}
+              alt={userName}
+              className="profile-image"
+            />
+            <span className="profile-name">{userName}</span>
           </div>
-          {/* Links para telas maiores */}
-          <div className={`menu ${isOpen ? 'active' : ''} md:flex md:items-center space-x-4`}>
-            <Link to="/" className="text-white px-3 py-2">
-              Home
-            </Link>
-            <Link to="/create-activity" className="text-white px-3 py-2">
-              Criar Atividade
-            </Link>
-            <Link to="/profile" className="text-white px-3 py-2">
-              Perfil
-            </Link>
-            <Link to="/login" className="text-white px-3 py-2">
-              Entrar
-            </Link>
-          </div>
+          <button onClick={handleLogout} className="logout-button">
+            Sair
+          </button>
+        </div>
+
+        <button className="menu-toggle" onClick={toggleMenu}>
+          <span className="menu-icon"></span>
+        </button>
+
+        <div className={`mobile-menu ${isOpen ? 'active' : ''}`}>
+          <Link to="/dashboard" className="mobile-link">Dashboard</Link>
+          <Link to="/nearby" className="mobile-link">Nas Redondezas</Link>
+          <Link to="/create-activity" className="mobile-link">Criar Atividade</Link>
+          <Link to="/profile" className="mobile-link">Perfil</Link>
+          <button onClick={handleLogout} className="mobile-logout">Sair</button>
         </div>
       </div>
     </nav>

@@ -3,134 +3,177 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
 body {
-  background-color: #f4f4f4;
-  color: #333;
-  padding: 20px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  line-height: 1.6;
 }
 
 /* Navbar */
 .navbar {
-  background-color: #333;
-  color: white;
-  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .navbar a {
-  color: white;
+  color: #1a1a1a;
   text-decoration: none;
-  padding: 10px;
-  margin: 0 15px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
 }
 
 .navbar a:hover {
-  background-color: #575757;
-  border-radius: 5px;
+  background-color: #f5f5f5;
+  transform: translateY(-1px);
 }
 
 /* Container principal */
 .container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 6rem auto 2rem;
+  padding: 0 2rem;
 }
 
 .dashboard-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 4rem;
 }
 
 .dashboard-header h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: #1a1a1a;
+  font-weight: 700;
+  margin-bottom: 1rem;
 }
 
 .dashboard-header p {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #666;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Atividades em Destaque */
 .featured-activities {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 .featured-activity {
   background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.featured-activity:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .featured-activity img {
   width: 100%;
-  height: 200px;
+  height: 240px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
 }
 
 .featured-activity h3 {
   font-size: 1.5rem;
-  color: #333;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .featured-activity p {
   font-size: 1rem;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 
 .featured-activity .date {
-  font-size: 1rem;
-  color: #999;
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+  display: block;
 }
 
 .featured-activity .details-btn {
-  background-color: #007bff;
+  background-color: #2563eb;
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
   text-decoration: none;
   display: inline-block;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .featured-activity .details-btn:hover {
-  background-color: #0056b3;
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
 }
 
 /* Mapa */
 .map-container {
-  margin-top: 50px;
+  margin: 4rem 0;
   text-align: center;
 }
 
 .map-container h2 {
   font-size: 2rem;
-  color: #333;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .map-container img {
   width: 100%;
-  max-width: 800px;
-  height: 400px;
+  max-width: 1000px;
+  height: 500px;
   object-fit: cover;
-  border-radius: 10px;
-  margin-top: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.featured-activity {
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 /* Responsividade */
 @media screen and (max-width: 768px) {
-  .featured-activities {
-    grid-template-columns: 1fr 1fr;
+  .container {
+    padding: 0 1rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
   }
 
   .map-container img {
@@ -139,16 +182,23 @@ body {
 }
 
 @media screen and (max-width: 480px) {
-  .featured-activities {
-    grid-template-columns: 1fr;
-  }
-
   .navbar {
-    flex-direction: column;
-    text-align: center;
+    padding: 1rem;
   }
 
   .navbar a {
-    margin: 10px 0;
+    margin: 0.5rem 0;
+  }
+
+  .dashboard-header {
+    margin-bottom: 2rem;
+  }
+
+  .featured-activity {
+    padding: 1rem;
+  }
+
+  .featured-activity img {
+    height: 200px;
   }
 }

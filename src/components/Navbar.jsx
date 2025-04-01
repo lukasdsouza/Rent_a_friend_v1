@@ -1,65 +1,44 @@
-// src/components/Navbar.js
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+
+// src/components/Navbar.jsx
+import React from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useLanguage();
   const userImage = localStorage.getItem('userImage') || 'https://via.placeholder.com/40';
   const userName = localStorage.getItem('userName') || 'Usuário';
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
+  const isActive = (path) => {
+    return location.pathname === path;
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/dashboard" className="logo">
-          Rent a Friend
-        </Link>
-
-        <div className="nav-links">
-          <Link to="/dashboard" className="nav-link">
-            Dashboard
-          </Link>
-          <Link to="/nearby" className="nav-link">
-            Nas Redondezas
-          </Link>
-          <Link to="/create-activity" className="nav-link">
-            Criar Atividade
-          </Link>
-        </div>
-
-        <div className="nav-profile">
-          <div className="profile-menu" onClick={() => navigate('/profile')}>
-            <img
-              src={userImage}
-              alt={userName}
-              className="profile-image"
-            />
-            <span className="profile-name">{userName}</span>
+    <nav className="navbar bg-white dark:bg-gray-800 shadow-md">
+      <div className="navbar-container max-w-6xl mx-auto px-4">
+        <div className="flex justify-center w-full">
+          <div className="nav-links flex">
+            <Link 
+              to="/dashboard" 
+              className={`nav-link ${isActive('/dashboard') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              {t('navbar.dashboard')}
+            </Link>
+            <Link 
+              to="/nearby" 
+              className={`nav-link ${isActive('/nearby') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              {t('navbar.nearby')}
+            </Link>
+            <Link 
+              to="/create-activity" 
+              className={`nav-link ${isActive('/create-activity') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              {t('navbar.createActivity')}
+            </Link>
           </div>
-          <button onClick={handleLogout} className="logout-button">
-            Sair
-          </button>
-        </div>
-
-        <button className="menu-toggle" onClick={toggleMenu}>
-          <span className="menu-icon"></span>
-        </button>
-
-        <div className={`mobile-menu ${isOpen ? 'active' : ''}`}>
-          <Link to="/dashboard" className="mobile-link">Dashboard</Link>
-          <Link to="/nearby" className="mobile-link">Nas Redondezas</Link>
-          <Link to="/create-activity" className="mobile-link">Criar Atividade</Link>
-          <Link to="/profile" className="mobile-link">Perfil</Link>
-          <button onClick={handleLogout} className="mobile-logout">Sair</button>
         </div>
       </div>
     </nav>

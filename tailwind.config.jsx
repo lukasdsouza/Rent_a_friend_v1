@@ -1,8 +1,10 @@
+
 // tailwind.config.js
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
+  darkMode: 'class', // Habilitando modo escuro baseado em classes
   theme: {
     extend: {
       colors: {

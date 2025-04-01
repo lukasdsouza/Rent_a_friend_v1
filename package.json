@@ -1,4 +1,5 @@
 {
+  "build:dev": "vite build --mode development",
   "name": "rent_a_friend",
   "private": true,
   "version": "0.0.0",

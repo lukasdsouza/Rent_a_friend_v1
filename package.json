@@ -1,10 +1,10 @@
 {
+  "build:dev": "vite build --mode development",
   "name": "rent_a_friend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "build:dev": "vite build --mode development",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

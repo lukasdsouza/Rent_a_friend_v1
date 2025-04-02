@@ -1,6 +1,49 @@
 
 import { firestore } from './firebase';
 
+// Verificar se um pagamento está relacionado a uma atividade
+export const checkActivityPaymentStatus = async (activityId, userId) => {
+  try {
+    const paymentsRef = await firestore.collection('payments')
+      .where('activityId', '==', activityId)
+      .where('userId', '==', userId)
+      .where('status', '==', 'completed')
+      .limit(1)
+      .get();
+    
+    return !paymentsRef.empty;
+  } catch (error) {
+    console.error('Erro ao verificar pagamento:', error);
+    throw error;
+  }
+};
+
+// Função para prevenir a troca de "amigo" após a reserva
+export const lockActivityAfterPayment = async (activityId) => {
+  try {
+    // Verificar se existe algum pagamento para esta atividade
+    const paymentsRef = await firestore.collection('payments')
+      .where('activityId', '==', activityId)
+      .where('status', '==', 'completed')
+      .limit(1)
+      .get();
+    
+    if (!paymentsRef.empty) {
+      // Se há pagamento, bloquear alterações na atividade
+      await firestore.collection('activities').doc(activityId).update({
+        locked: true,
+        lockedAt: new Date()
+      });
+      return true;
+    }
+    
+    return false;
+  } catch (error) {
+    console.error('Erro ao bloquear atividade:', error);
+    throw error;
+  }
+};
+
 // Inicializar Stripe
 const initializeStripe = async () => {
   const stripe = await loadStripe(process.env.VITE_STRIPE_PUBLIC_KEY);
@@ -10,6 +53,12 @@ const initializeStripe = async () => {
 // Criar sessão de checkout
 export const createCheckoutSession = async (activityId, userId) => {
   try {
+    // Verificar se o usuário já pagou por esta atividade
+    const alreadyPaid = await checkActivityPaymentStatus(activityId, userId);
+    if (alreadyPaid) {
+      throw new Error('Você já realizou o pagamento para esta atividade');
+    }
+
     // Buscar detalhes da atividade
     const activityDoc = await firestore.collection('activities').doc(activityId).get();
     
@@ -90,6 +139,12 @@ export const checkPaymentStatus = async (paymentId) => {
 // Simular processamento de pagamento Pix
 export const createPixPayment = async (activityId, userId) => {
   try {
+    // Verificar se o usuário já pagou por esta atividade
+    const alreadyPaid = await checkActivityPaymentStatus(activityId, userId);
+    if (alreadyPaid) {
+      throw new Error('Você já realizou o pagamento para esta atividade');
+    }
+    
     // Buscar detalhes da atividade
     const activityDoc = await firestore.collection('activities').doc(activityId).get();
     
@@ -119,6 +174,66 @@ export const createPixPayment = async (activityId, userId) => {
     };
   } catch (error) {
     console.error('Erro ao criar pagamento Pix:', error);
+    throw error;
+  }
+};
+
+// Finalizar pagamento e aplicar comissão
+export const completePayment = async (paymentId) => {
+  try {
+    // Obter detalhes do pagamento
+    const paymentDoc = await firestore.collection('payments').doc(paymentId).get();
+    
+    if (!paymentDoc.exists) {
+      throw new Error('Pagamento não encontrado');
+    }
+    
+    const payment = paymentDoc.data();
+    
+    if (payment.status === 'completed') {
+      return { success: true, alreadyCompleted: true };
+    }
+    
+    // Calcular comissão (15% padrão, 10% para usuários premium)
+    const activityDoc = await firestore.collection('activities').doc(payment.activityId).get();
+    const activity = activityDoc.data();
+    const friendId = activity.createdBy;
+    
+    // Verificar se o amigo é premium para aplicar taxa reduzida
+    const friendDoc = await firestore.collection('users').doc(friendId).get();
+    const isPremium = friendDoc.exists && friendDoc.data().subscriptionStatus === 'active' && 
+                     friendDoc.data().subscriptionPlan === 'premium';
+    
+    const commissionRate = isPremium ? 0.10 : 0.15; // 10% para premium, 15% para outros
+    const commission = payment.amount * commissionRate;
+    const netAmount = payment.amount - commission;
+    
+    // Atualizar pagamento
+    await firestore.collection('payments').doc(paymentId).update({
+      status: 'completed',
+      commission,
+      netAmount,
+      completedAt: new Date()
+    });
+    
+    // Atualizar saldo do amigo
+    const currentBalance = friendDoc.data().balance || 0;
+    await firestore.collection('users').doc(friendId).update({
+      balance: currentBalance + netAmount
+    });
+    
+    // Bloquear alterações na atividade após o pagamento
+    await lockActivityAfterPayment(payment.activityId);
+    
+    return {
+      success: true,
+      paymentId,
+      amount: payment.amount,
+      commission,
+      netAmount
+    };
+  } catch (error) {
+    console.error('Erro ao completar pagamento:', error);
     throw error;
   }
 };

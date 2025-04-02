@@ -10,6 +10,8 @@ import CreateActivity from './pages/CreateActivity';
 import NearbyActivities from './pages/NearbyActivities';
 import MatchmakingPage from './pages/MatchmakingPage';
 import PaymentPage from './pages/PaymentPage';
+import SubscriptionPage from './pages/SubscriptionPage';
+import VerificationPage from './pages/VerificationPage';
 import Header from './components/Header';
 import HamburgerMenu from './components/HamburgerMenu';
 import { LanguageProvider } from './context/LanguageContext';
@@ -72,6 +74,23 @@ function App() {
                 <Route
                   path="/community"
                   element={isAuthenticated ? <div className="p-8">Página da Comunidade</div> : <Navigate to="/login" />}
+                />
+                {/* Novas rotas */}
+                <Route
+                  path="/subscription"
+                  element={isAuthenticated ? <SubscriptionPage /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/verification"
+                  element={isAuthenticated ? <VerificationPage /> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/payment-success"
+                  element={isAuthenticated ? <div className="p-8 text-center"><h1 className="text-2xl font-bold text-green-600 mb-4">Pagamento Realizado com Sucesso!</h1><p>Seu pagamento foi processado e sua reserva está confirmada.</p></div> : <Navigate to="/login" />}
+                />
+                <Route
+                  path="/payment-cancel"
+                  element={isAuthenticated ? <div className="p-8 text-center"><h1 className="text-2xl font-bold text-red-600 mb-4">Pagamento Cancelado</h1><p>Seu pagamento foi cancelado. Você pode tentar novamente mais tarde.</p></div> : <Navigate to="/login" />}
                 />
 
                 {/* Redirecionar raiz para login ou dashboard */}

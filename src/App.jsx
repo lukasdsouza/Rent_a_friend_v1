@@ -8,8 +8,6 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import CreateActivity from './pages/CreateActivity';
 import NearbyActivities from './pages/NearbyActivities';
-import MatchmakingPage from './pages/MatchmakingPage';
-import PaymentPage from './pages/PaymentPage';
 import Header from './components/Header';
 import HamburgerMenu from './components/HamburgerMenu';
 import { LanguageProvider } from './context/LanguageContext';
@@ -56,14 +54,6 @@ function App() {
                 <Route
                   path="/nearby"
                   element={isAuthenticated ? <NearbyActivities /> : <Navigate to="/login" />}
-                />
-                <Route
-                  path="/matchmaking"
-                  element={isAuthenticated ? <MatchmakingPage /> : <Navigate to="/login" />}
-                />
-                <Route
-                  path="/payment/:activityId"
-                  element={isAuthenticated ? <PaymentPage /> : <Navigate to="/login" />}
                 />
                 <Route
                   path="/settings"

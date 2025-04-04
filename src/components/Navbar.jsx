@@ -33,10 +33,28 @@ const Navbar = () => {
               {t('navbar.nearby')}
             </Link>
             <Link 
+              to="/matchmaking" 
+              className={`nav-link ${isActive('/matchmaking') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              Matchmaking
+            </Link>
+            <Link 
               to="/create-activity" 
               className={`nav-link ${isActive('/create-activity') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
             >
               {t('navbar.createActivity')}
+            </Link>
+            <Link 
+              to="/subscription" 
+              className={`nav-link ${isActive('/subscription') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              Assinatura
+            </Link>
+            <Link 
+              to="/verification" 
+              className={`nav-link ${isActive('/verification') ? 'bg-gray-100 dark:bg-gray-700 text-primary dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}
+            >
+              Verificação
             </Link>
           </div>
         </div>
